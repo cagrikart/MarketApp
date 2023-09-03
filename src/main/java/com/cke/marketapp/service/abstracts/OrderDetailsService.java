@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface OrderDetailsService {
     DataResult<List<OrderDetails>> getOrderDetails();
-    Result postOrderDetails(OrderDetailsRequest orderDetailsRequest);
+     DataResult<List<OrderDetails>> postOrderDetails(List<OrderDetailsRequest> requests) ;
 
 }

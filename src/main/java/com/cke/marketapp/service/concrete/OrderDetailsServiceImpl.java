@@ -12,6 +12,7 @@ import com.cke.marketapp.repository.OrderRepository;
 import com.cke.marketapp.service.abstracts.OrderDetailsService;
 import com.cke.marketapp.util.OrderDetailsMapperUtil;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +28,9 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     }
 
     @Override
-    public Result postOrderDetails(OrderDetailsRequest orderDetailsRequest) {
-        OrderDetails orderDetails = mapperUtil.postOrderDetails(orderDetailsRequest);
-        OrderDetails savedOrderDetails = orderDetailsRepository.save(orderDetails);
+    public DataResult<List<OrderDetails>> postOrderDetails(List<OrderDetailsRequest> orderDetailsRequest) {
+        List<OrderDetails> orderDetails = mapperUtil.postOrderDetails(orderDetailsRequest);
+        List<OrderDetails> savedOrderDetails = orderDetailsRepository.saveAll(orderDetails);
         return new SuccessDataResult<>(savedOrderDetails,"eklendi");
     }
 }

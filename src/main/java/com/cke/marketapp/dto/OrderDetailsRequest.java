@@ -13,8 +13,5 @@ import javax.persistence.ManyToOne;
 public class OrderDetailsRequest {
 
     private int quantity;
-
-    //private double unitPrice;
-
     private Long productId;
 }

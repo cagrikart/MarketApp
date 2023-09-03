@@ -5,6 +5,7 @@ import com.cke.marketapp.dto.JwtResponse;
 import com.cke.marketapp.dto.LoginRequest;
 import com.cke.marketapp.dto.SignupRequest;
 import com.cke.marketapp.entities.ERole;
+import com.cke.marketapp.entities.Employee;
 import com.cke.marketapp.entities.Role;
 import com.cke.marketapp.entities.User;
 import com.cke.marketapp.repository.RoleRepository;
@@ -85,7 +86,7 @@ public class AuthController {
         }
 
             // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
+        Employee employee = new Employee(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
@@ -119,8 +120,8 @@ public class AuthController {
             });
         }
 
-        user.setRoles(roles);
-        userRepository.save(user);
+        employee.setRoles(roles);
+        userRepository.save(employee);
 
         return ResponseEntity.ok("User registered successfully!");
     }

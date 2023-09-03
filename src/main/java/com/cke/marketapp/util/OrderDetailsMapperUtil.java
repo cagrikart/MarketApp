@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -21,46 +23,49 @@ public class OrderDetailsMapperUtil {
     private OrderRepository orderRepository;
     private ProductRepository productRepository;
 
-    public OrderDetails postOrderDetails(OrderDetailsRequest request) {
-        Optional<Product> productDb = this.productRepository.findById(request.getProductId());
-        if (productDb.isPresent()) {
-            Product product = productDb.get();
+    public List<OrderDetails> postOrderDetails(List<OrderDetailsRequest> requests) {
+        List<OrderDetails> orderDetailsList = new ArrayList<>();
 
-            int requestedQuantity = request.getQuantity();
+        for (OrderDetailsRequest request : requests) {
+            Optional<Product> productDb = this.productRepository.findById(request.getProductId());
 
-            if (product.getQuantity() >= requestedQuantity) {
+            if (productDb.isPresent()) {
+                Product product = productDb.get();
+                int requestedQuantity = request.getQuantity();
 
-                // Stoktan düşülecek miktarı hesaplayalım
-                int remainingStock = product.getQuantity() - requestedQuantity;
-                product.setQuantity(remainingStock);
-                // Stok güncellemesini kaydedelim
-                this.productRepository.save(product);
+                if (product.getQuantity() >= requestedQuantity) {
+                    // Stoktan düşülecek miktarı hesaplayalım
+                    int remainingStock = product.getQuantity() - requestedQuantity;
+                    product.setQuantity(remainingStock);
 
-                Order order = new Order();
-                OrderDetails orderDetails = new OrderDetails();
-                orderDetails.setQuantity(requestedQuantity);
-                orderDetails.setProduct(product);
+                    // Stok güncellemesini kaydedelim
+                    this.productRepository.save(product);
 
-                // Calculate total price
-                double totalPrice = product.getPrice() * requestedQuantity;
-                orderDetails.setTotalPrice(totalPrice);
+                    OrderDetails orderDetails = new OrderDetails();
+                    orderDetails.setQuantity(requestedQuantity);
+                    orderDetails.setProduct(product);
 
-                // Add order details to the order
-                order.addOrderDetails(orderDetails);
+                    // Calculate total price
+                    double totalPrice = product.getPrice() * requestedQuantity;
+                    orderDetails.setTotalPrice(totalPrice);
 
-                // Save order and its details
-                order = orderRepository.save(order);
-
-                return orderDetails;
+                    // OrderDetails listesine ekle
+                    orderDetailsList.add(orderDetails);
+                } else {
+                    throw new RuntimeException("Yetersiz stok: Ürün ID - " + product.getId());
+                }
             } else {
-                // Yeterli stok yoksa buraya düşecek işlemler
-                // Örneğin, bir hata işleme mekanizması kullanabilir veya null dönebilirsiniz.
-                // Örnek olarak:
-                throw new RuntimeException("Yeterli stok yok.");
+                throw new RuntimeException("Ürün bulunamadı: Ürün ID - " + request.getProductId());
             }
         }
 
-        return null;  // Ürün bulunamadıysa null dönebilir veya uygun bir hata işleme yapılabilir.
+        // Tüm sipariş detaylarını kaydet
+        Order order = new Order();
+        order.setOrderDetailsList(orderDetailsList);
+        order = orderRepository.save(order);
+
+        return orderDetailsList;
     }
+
 
 }

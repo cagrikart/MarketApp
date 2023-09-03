@@ -18,7 +18,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long customerId;
 
     private LocalDate orderDate;
 
@@ -28,6 +27,10 @@ public class Order {
     // CascadeType.ALL, bir sipariş silindiğinde ilişkili detayların da silinmesini sağlar.
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderDetails> orderDetailsList = new ArrayList<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
     public void addOrderDetails(OrderDetails orderDetails) {
         this.orderDetailsList.add(orderDetails);
     }

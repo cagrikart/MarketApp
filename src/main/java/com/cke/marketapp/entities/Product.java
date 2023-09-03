@@ -24,7 +24,5 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id") // Bu, ürün tablosunda mağaza ile ilişkilendiren sütunu belirtir.
     private Shop shop;
-  /*@ManyToMany(mappedBy = "products")
-    private List<OrderDetails> orderDetails = new ArrayList<>();
-*/
+
 }

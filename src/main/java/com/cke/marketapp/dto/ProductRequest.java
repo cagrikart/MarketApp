@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 @Data
 public class ProductRequest {
 
-    private Long productId;
 
     private String productName;
     private String barkodCode;

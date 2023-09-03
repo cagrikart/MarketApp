@@ -24,7 +24,7 @@ public class OrderDetailsController {
     }
 
     @PostMapping("/postOrderDetails")
-    public Result postOrderDetails(@RequestBody OrderDetailsRequest orderDetailsRequest) {
+    public Result postOrderDetails(@RequestBody List<OrderDetailsRequest>  orderDetailsRequest) {
         return new SuccessDataResult<>(this.orderDetailsService.postOrderDetails(orderDetailsRequest));
     }
 }
