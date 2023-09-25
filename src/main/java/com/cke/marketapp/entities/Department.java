@@ -4,15 +4,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+
 @Entity
 @Data
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","department"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","product"})
 
-public class Shop {
+public class Department {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String shopName;
+    private String departmentName;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id")
+    private Shop  shop;
 
 }

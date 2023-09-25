@@ -4,12 +4,15 @@ import com.cke.marketapp.core.utilities.results.DataResult;
 import com.cke.marketapp.core.utilities.results.Result;
 import com.cke.marketapp.dto.request.DepartmentRequest;
 import com.cke.marketapp.entities.Department;
-import com.cke.marketapp.entities.Shop;
 
 import java.util.List;
 
-public interface ShopService {
-    DataResult<List<Shop>> getShopList();
+public interface DepartmentService {
+    DataResult<List<Department>> getDepartmentList();
 
-    Result postShop(Shop shop);
+    Result createDepartments(List<DepartmentRequest> departmentRequests);
+
+    DataResult<List<Department>> getDepartmentsByShopId(Long shopId);
+
 }
+

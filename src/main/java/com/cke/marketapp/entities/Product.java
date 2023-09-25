@@ -1,11 +1,8 @@
 package com.cke.marketapp.entities;
 
 import lombok.Data;
-import lombok.Generated;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -17,12 +14,16 @@ public class Product {
 
     private String productName;
     private String barkodCode;
-
+    private double purchasePrice;
     private double price;
-    private int quantity;
 
+    private double categoryId;
+    private double stockGroupId;
+    private String groupName;
+
+    private int quantity;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_id") // Bu, ürün tablosunda mağaza ile ilişkilendiren sütunu belirtir.
-    private Shop shop;
+    @JoinColumn(name = "department_id")
+    private Department department;
 
 }

@@ -1,4 +1,4 @@
-package com.cke.marketapp.dto;
+package com.cke.marketapp.dto.request;
 
 import com.cke.marketapp.entities.Order;
 import com.cke.marketapp.entities.Product;

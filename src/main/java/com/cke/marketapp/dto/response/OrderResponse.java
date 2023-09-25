@@ -1,4 +1,4 @@
-package com.cke.marketapp.dto;
+package com.cke.marketapp.dto.response;
 
 import com.cke.marketapp.entities.OrderDetails;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class OrderResponse {
     private Long employeeId;
-    private List<OrderDetails> orderDetailsIds;
+    private List<Long> orderDetailsIds;
     private LocalDate orderDate;
     private double totalAmount;
 

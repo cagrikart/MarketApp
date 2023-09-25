@@ -1,6 +1,6 @@
 package com.cke.marketapp.util;
 
-import com.cke.marketapp.dto.OrderDetailsRequest;
+import com.cke.marketapp.dto.request.OrderDetailsRequest;
 import com.cke.marketapp.entities.Order;
 import com.cke.marketapp.entities.OrderDetails;
 import com.cke.marketapp.entities.Product;
@@ -10,7 +10,6 @@ import com.cke.marketapp.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

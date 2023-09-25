@@ -1,9 +1,9 @@
-package com.cke.marketapp.dto;
+package com.cke.marketapp.dto.response;
 
 import lombok.Data;
 
 @Data
-public class ShopResponse {
+public class DepartmentResponse {
     private Long id;
 
     private String shopName;

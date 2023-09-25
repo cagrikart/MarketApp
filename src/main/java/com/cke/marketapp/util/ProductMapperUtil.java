@@ -1,13 +1,12 @@
 package com.cke.marketapp.util;
 
-import com.cke.marketapp.dto.ProductOfShopIdResponse;
-import com.cke.marketapp.dto.ProductRequest;
-import com.cke.marketapp.dto.ProductResponse;
+import com.cke.marketapp.dto.response.ProductOfShopIdResponse;
+import com.cke.marketapp.dto.request.ProductRequest;
+import com.cke.marketapp.dto.response.ProductResponse;
 import com.cke.marketapp.entities.Product;
-import com.cke.marketapp.entities.Shop;
-import com.cke.marketapp.repository.ShopRepository;
+import com.cke.marketapp.entities.Department;
+import com.cke.marketapp.repository.DepartmentRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -15,7 +14,7 @@ import java.util.Optional;
 @Component
 @AllArgsConstructor
 public class ProductMapperUtil {
-    private ShopRepository shopRepository;
+    private DepartmentRepository departmentRepository;
 
     public Product postProduct(ProductRequest request) {
         Product product = new Product();
@@ -23,9 +22,9 @@ public class ProductMapperUtil {
         product.setPrice(request.getPrice());
         product.setQuantity(request.getQuantity());
         product.setBarkodCode(request.getBarkodCode());
-        Optional<Shop> shopOptional = shopRepository.findById(request.getShopId());
+        Optional<Department> shopOptional = departmentRepository.findById(request.getShopId());
         if (shopOptional.isPresent()) {
-            product.setShop(shopOptional.get());
+            product.setDepartment(shopOptional.get());
         }
         return product;
     }
@@ -35,7 +34,7 @@ public class ProductMapperUtil {
         response.setBarkodCode(product.getBarkodCode());
         response.setPrice(product.getPrice());
         response.setQuantity(product.getQuantity());
-        response.setShopId(product.getShop().getId());
+        response.setShopId(product.getDepartment().getId());
         return response;
     }
 

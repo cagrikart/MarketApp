@@ -1,11 +1,6 @@
-package com.cke.marketapp.dto;
+package com.cke.marketapp.dto.request;
 
-import com.cke.marketapp.entities.Shop;
 import lombok.Data;
-
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Data
 public class ProductRequest {

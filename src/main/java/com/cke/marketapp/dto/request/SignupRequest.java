@@ -1,4 +1,4 @@
-package com.cke.marketapp.dto;
+package com.cke.marketapp.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

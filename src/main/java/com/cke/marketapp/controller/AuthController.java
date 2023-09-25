@@ -1,13 +1,12 @@
 package com.cke.marketapp.controller;
 
 
-import com.cke.marketapp.dto.JwtResponse;
-import com.cke.marketapp.dto.LoginRequest;
-import com.cke.marketapp.dto.SignupRequest;
+import com.cke.marketapp.dto.response.JwtResponse;
+import com.cke.marketapp.dto.request.LoginRequest;
+import com.cke.marketapp.dto.request.SignupRequest;
 import com.cke.marketapp.entities.ERole;
 import com.cke.marketapp.entities.Employee;
 import com.cke.marketapp.entities.Role;
-import com.cke.marketapp.entities.User;
 import com.cke.marketapp.repository.RoleRepository;
 import com.cke.marketapp.repository.UserRepository;
 import com.cke.marketapp.security.jwt.JwtUtils;
