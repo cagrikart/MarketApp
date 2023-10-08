@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,Long> {
     List<Order> getOrderByOrderDate(LocalDate orderDate);
+    List<Order> getOrderByPayment_PaymentId(Long paymentId);
+
+    List<Order> getOrderByEmployeeId(Long employeeId);
 }

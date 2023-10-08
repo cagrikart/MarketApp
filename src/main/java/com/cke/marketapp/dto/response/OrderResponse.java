@@ -8,10 +8,14 @@ import java.util.List;
 
 @Data
 public class OrderResponse {
+    private Long orderId;
     private Long employeeId;
     private List<Long> orderDetailsIds;
     private LocalDate orderDate;
     private double totalAmount;
+
+    private Long paymentId;
+
 
 
 }

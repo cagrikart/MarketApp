@@ -13,6 +13,8 @@ public class OrderRequest {
 
     private LocalDate orderDate;
 
+    private Long paymentId;
+
     private List<OrderDetailsRequest> orderDetailsList = new ArrayList<>();
 
 }

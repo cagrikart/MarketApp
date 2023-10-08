@@ -4,15 +4,14 @@ import com.cke.marketapp.dto.request.OrderDetailsRequest;
 import com.cke.marketapp.dto.request.OrderRequest;
 import com.cke.marketapp.dto.response.OrderDateResponse;
 import com.cke.marketapp.dto.response.OrderResponse;
-import com.cke.marketapp.entities.Employee;
-import com.cke.marketapp.entities.Order;
-import com.cke.marketapp.entities.OrderDetails;
-import com.cke.marketapp.entities.Product;
+import com.cke.marketapp.entities.*;
 import com.cke.marketapp.repository.EmployeeRepository;
 import com.cke.marketapp.repository.OrderRepository;
+import com.cke.marketapp.repository.PaymentRepository;
 import com.cke.marketapp.repository.ProductRepository;
 import com.cke.marketapp.service.abstracts.OrderDetailsService;
 import lombok.AllArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -25,25 +24,10 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class OrderMapperUtil {
     private EmployeeRepository employeeRepository;
-    private OrderDetailsService orderDetailsService;
     private OrderRepository orderRepository;
-
+    private PaymentRepository paymentRepository;
     private ProductRepository productRepository;
-    public OrderResponse listOrder(Order order) {
-        OrderResponse response = new OrderResponse();
-        response.setEmployeeId(order.getEmployee().getId());
-        response.setOrderDate(order.getOrderDate());
-        response.setTotalAmount(order.getTotalAmount());
 
-        // OrderDetails'ların ID'lerini alın
-        List<Long> orderDetailsIds = order.getOrderDetailsList()
-                .stream()
-                .map(orderDetails -> orderDetails.getId())
-                .collect(Collectors.toList());
-
-        response.setOrderDetailsIds(orderDetailsIds);
-        return response;
-    }
     public OrderDateResponse listDateOrder(LocalDate orderDate) {
         List<Order> orders = orderRepository.getOrderByOrderDate(orderDate);
 
@@ -57,13 +41,17 @@ public class OrderMapperUtil {
 
         return response;
     }
+
+
     public OrderResponse postOrder(OrderRequest request) {
         // Order nesnesini oluşturun
         Order order = new Order();
         Optional<Employee> employeeOptional = employeeRepository.findById(request.getEmployeeId());
+        Optional<Payment> paymentOptional = paymentRepository.findById(request.getPaymentId());
 
-        if (employeeOptional.isPresent()) {
+        if (employeeOptional.isPresent() && paymentOptional.isPresent()) {
             order.setEmployee(employeeOptional.get());
+            order.setPayment(paymentOptional.get());
         } else {
             throw new RuntimeException("Geçersiz çalışan ID: " + request.getEmployeeId());
         }
@@ -130,5 +118,40 @@ public class OrderMapperUtil {
 
         return response;
     }
+
+    public List<OrderResponse> getOrderByEmployeeId(Long employeeId) {
+        List<Order> orders = orderRepository.getOrderByEmployeeId(employeeId);
+        List<OrderResponse> orderResponses = new ArrayList<>();
+        if (!orders.isEmpty()) {
+            for (Order order : orders) {
+                OrderResponse response = new OrderResponse();
+                response.setOrderId(order.getId());
+                response.setOrderDate(order.getOrderDate());
+                response.setPaymentId(order.getPayment().getPaymentId());
+                response.setEmployeeId(order.getEmployee().getId());
+                response.setTotalAmount(order.getTotalAmount());
+                orderResponses.add(response);
+            }
+        }
+        return orderResponses;
+    }
+
+    public List<OrderResponse> orderWithPaymentId(Long paymentId) {
+        List<Order> orders = orderRepository.getOrderByPayment_PaymentId(paymentId);
+        List<OrderResponse> orderResponses = new ArrayList<>();
+        if (!orders.isEmpty()) {
+            for (Order order : orders) {
+                OrderResponse response = new OrderResponse();
+                response.setOrderId(order.getId());
+                response.setOrderDate(order.getOrderDate());
+                response.setPaymentId(order.getPayment().getPaymentId());
+                response.setEmployeeId(order.getEmployee().getId());
+                response.setTotalAmount(order.getTotalAmount());
+                orderResponses.add(response);
+            }
+        }
+        return orderResponses;
+    }
+
 
 }

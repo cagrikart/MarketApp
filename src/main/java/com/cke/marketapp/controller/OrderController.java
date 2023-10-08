@@ -19,16 +19,24 @@ public class OrderController {
 
     private OrderService orderService;
 
-    @PostMapping("/placeOrder")
-    public OrderResponse placeOrder(@RequestBody OrderRequest requests) {
+    @PostMapping("/postOrder")
+    public OrderResponse postOrder(@RequestBody OrderRequest requests) {
         return this.orderService.postOrder(requests);
 
     }
 
-    @GetMapping("/dateOrder")
-    public DataResult<List<OrderDateResponse>> dateOrder(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderDate) {
+    @GetMapping("/ordersWithDate")
+    public DataResult<List<OrderDateResponse>> ordersWithDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate orderDate) {
         return this.orderService.dateOrder(orderDate);
     }
 
+    @GetMapping("/orderWithPaymentId")
+    public DataResult<List<OrderResponse>> orderWithPaymentId(@RequestParam("paymentId") Long paymentId) {
+        return this.orderService.orderWithPaymentId(paymentId);
+    }
 
+    @GetMapping("/getOrderByEmployeeId")
+    public DataResult<List<Order>> getOrderByEmployeeId(@RequestParam("employeeId") Long employeeId) {
+        return this.orderService.getOrderByEmployeeId(employeeId);
+    }
 }

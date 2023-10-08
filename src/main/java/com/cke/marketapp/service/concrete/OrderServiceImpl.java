@@ -28,13 +28,26 @@ public class OrderServiceImpl implements OrderService {
         return response;
     }
 
+    @Override
+    public DataResult<List<OrderResponse>> orderWithPaymentId(Long paymentId) {
+        List<OrderResponse> orderResponses =mapperUtil.orderWithPaymentId(paymentId);
+
+        return new SuccessDataResult<>(orderResponses,"listed order by payment id ");
+    }
+    @Override
+    public DataResult<List<OrderDateResponse>> dateOrder(LocalDate orderDate) {
+        OrderDateResponse orderResponse;
+        orderResponse = mapperUtil.listDateOrder(orderDate);
+        return new SuccessDataResult<>(orderResponse, "Listed orders for the given date");
+    }
 
     @Override
-        public DataResult<List<OrderDateResponse>> dateOrder(LocalDate orderDate) {
-            OrderDateResponse orderResponse ;
-            orderResponse = mapperUtil.listDateOrder(orderDate);
-            return new SuccessDataResult<>(orderResponse, "Listed orders for the given date");
-        }
+    public DataResult<List<Order>> getOrderByEmployeeId(Long employeeId) {
+        List<OrderResponse> orderResponses =mapperUtil.getOrderByEmployeeId(employeeId);
+        return new SuccessDataResult<>(orderResponses, "listed order by employee id ");
+    }
+
+
 
 }
 

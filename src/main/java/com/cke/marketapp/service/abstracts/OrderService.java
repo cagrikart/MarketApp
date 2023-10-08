@@ -11,11 +11,13 @@ import java.util.List;
 
 public interface OrderService {
 
-    //DataResult<List<Order>> getOrder();
 
     DataResult<List<OrderDateResponse>> dateOrder(LocalDate orderDate);
-   // double getTotalAmountByDate(LocalDate orderDate);
     OrderResponse postOrder(OrderRequest request);
+
+    DataResult<List<OrderResponse>> orderWithPaymentId(Long paymentId);
+    DataResult<List<Order> >getOrderByEmployeeId(Long employeeId);
+
 
 
 }

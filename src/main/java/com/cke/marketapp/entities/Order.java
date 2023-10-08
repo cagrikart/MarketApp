@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "orders")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","order"})
 
 public class Order {
     @Id
@@ -31,6 +32,11 @@ public class Order {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "payment_di")
+    private Payment payment;
+
     public void addOrderDetails(OrderDetails orderDetails) {
         this.orderDetailsList.add(orderDetails);
     }
