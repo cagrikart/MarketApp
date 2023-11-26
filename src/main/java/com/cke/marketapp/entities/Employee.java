@@ -14,8 +14,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","employee"})
-
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","user"})
 public class Employee extends User { //çalışan
 
     @Id
